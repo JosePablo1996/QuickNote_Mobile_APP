@@ -61,6 +61,11 @@ app.*.map.json
 # Configuración de firma de release (contiene contraseñas y rutas)
 /android/key.properties
 
+# Archivos temporales de keystore (Base64, etc.)
+keystore_base64.txt
+*keystore*.txt
+*_base64.txt
+
 # Archivos de propiedades con credenciales
 *.properties
 !gradle.properties
@@ -87,3 +92,36 @@ GoogleService-Info.plist
 *keystore*.bak
 *keystore*.backup
 *keystore*.old
+
+# ============================================
+# CI/CD y GitHub Actions
+# ============================================
+
+# Artefactos de builds locales
+/build/
+/outputs/
+*.hprof
+
+# Archivos temporales de workflows
+.github/tmp/
+.github/cache/
+
+# Logs de builds
+*.log
+build_log.txt
+
+# ============================================
+# Archivos específicos del proyecto QuickNote
+# ============================================
+
+# Archivos de versión local (si contienen datos sensibles)
+VERSION.local.txt
+
+# Backups de bases de datos locales
+*.db
+*.db.backup
+*.sqlite
+*.sqlite3
+
+# Archivos de caché de Supabase (local)
+.supabase/
