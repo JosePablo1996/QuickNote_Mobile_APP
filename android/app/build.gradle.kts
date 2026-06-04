@@ -1,51 +1,84 @@
+// android/app/build.gradle.kts
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+}
+
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
     namespace = "com.quicknote.quicknote"
-    compileSdk = 36  // ✅ CAMBIADO: 34 → 36
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-        // ✅ AGREGADO: Habilitar desugaring para soporte de Java 8+
         isCoreLibraryDesugaringEnabled = true
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
         applicationId = "com.quicknote.quicknote"
-        // ✅ CAMBIADO: usar 21 en lugar de flutter.minSdkVersion (requerido para desugaring)
         minSdk = flutter.minSdkVersion
-        // ✅ CAMBIADO: usar 34 en lugar de flutter.targetSdkVersion
         targetSdk = 34
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
-        // ✅ AGREGADO: Habilitar multidex para evitar límite de métodos
+        versionCode = 2
+        versionName = "2.8.0"
         multiDexEnabled = true
+    }
+
+    signingConfigs {
+        create("release") {
+            if (keystorePropertiesFile.exists()) {
+                val storeFilePath = keystoreProperties.getProperty("storeFile")
+                storeFile = file(storeFilePath)
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+                
+                // Mensaje de depuración para confirmar que se carga el keystore
+                println("✅ Keystore cargado correctamente")
+                println("   Ruta: ${storeFile?.absolutePath}")
+                println("   Alias: ${keyAlias}")
+            } else {
+                println("⚠️ ADVERTENCIA: No se encontró key.properties en ${keystorePropertiesFile?.absolutePath}")
+                println("   El APK release NO estará firmado")
+            }
+        }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = false
+            isShrinkResources = false
+            isDebuggable = false
+        }
+        debug {
             signingConfig = signingConfigs.getByName("debug")
+            isMinifyEnabled = false
+            isShrinkResources = false
+            isDebuggable = true
         }
     }
 }
 
-// ✅ AGREGADO: Dependencia para desugaring (soporte de Java 8+)
-// ✅ ACTUALIZADO: 2.0.4 → 2.1.4
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
+}
+
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.biometric:biometric:1.1.0")
 }
 
 flutter {

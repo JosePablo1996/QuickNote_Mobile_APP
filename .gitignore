@@ -43,3 +43,47 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# ============================================
+# SEGURIDAD Y CLAVES DE FIRMA (NO SUBIR A GITHUB)
+# ============================================
+
+# Archivos del keystore y claves privadas
+*.jks
+*.keystore
+*.key
+*.p12
+*.pfx
+*.pem
+*.crt
+*.csr
+
+# Configuración de firma de release (contiene contraseñas y rutas)
+/android/key.properties
+
+# Archivos de propiedades con credenciales
+*.properties
+!gradle.properties
+
+# Variables de entorno y secretos
+.env
+.env.local
+.env.production
+secrets.json
+secrets.yaml
+credentials.json
+
+# Archivos de Google Services (si usas Firebase)
+google-services.json
+GoogleService-Info.plist
+
+# Archivos de distribución para Play Store
+*.aab
+*.apk
+*.apks
+*.xapk
+
+# Backups del keystore (seguridad adicional)
+*keystore*.bak
+*keystore*.backup
+*keystore*.old

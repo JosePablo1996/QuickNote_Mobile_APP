@@ -22,7 +22,7 @@ dependencies:
   # Almacenamiento seguro
   # ============================================
   flutter_secure_storage: ^9.0.0
-  shared_preferences: ^2.2.2
+  shared_preferences: ^2.3.3  # ✅ ACTUALIZADA
   hive_flutter: ^1.1.0
   path_provider: ^2.1.1
   
@@ -54,7 +54,7 @@ dependencies:
   equatable: ^2.0.5
   uuid: ^4.3.3
   url_launcher: ^6.2.5
-  share_plus: ^9.0.0
+  share_plus: ^10.1.2  # ✅ ACTUALIZADA (mayor cambio)
   
   # ============================================
   # Seguridad
@@ -65,7 +65,7 @@ dependencies:
   # 2FA y QR
   # ============================================
   qr_flutter: ^4.1.0
-  mobile_scanner: ^5.0.0
+  mobile_scanner: ^6.0.2  # ✅ ACTUALIZADA
   otp: ^3.0.0
   
   # ============================================
@@ -73,7 +73,7 @@ dependencies:
   # ============================================
   pdf: ^3.10.7
   printing: ^5.11.1
-  file_picker: ^8.0.0+1
+  file_picker: ^8.1.4  # ✅ AÑADIDA (si la necesitas)
   archive: ^3.4.10
   
   # ============================================
@@ -84,7 +84,7 @@ dependencies:
   # ============================================
   # Selección de imágenes
   # ============================================
-  image_picker: ^1.0.5
+  image_picker: ^1.1.2  # ✅ ACTUALIZADA
   
   # ============================================
   # Iconos
@@ -105,7 +105,7 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   build_runner: ^2.4.8
   riverpod_generator: ^2.3.0
-  flutter_launcher_icons: ^0.14.3  # ✅ AÑADIDO para generar iconos
+  flutter_launcher_icons: ^0.14.3
 
 flutter:
   uses-material-design: true
@@ -113,7 +113,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/1766699641613.jpg
-    - assets/icons/  # ✅ AÑADIDO para que reconozca tu icono
+    - assets/icons/
 
 # ============================================
 # CONFIGURACIÓN DEL ICONO DE LA APP
@@ -122,5 +122,5 @@ flutter_icons:
   image_path: "assets/icons/icon.png"
   android: true
   ios: true
-  adaptive_icon_background: "#FFFFFF"   # Fondo blanco para icono adaptable
+  adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/icons/icon.png"
