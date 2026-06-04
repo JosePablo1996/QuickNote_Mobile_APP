@@ -1,0 +1,196 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- ============================================ -->
+    <!-- PERMISOS DE INTERNET -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    
+    <!-- ============================================ -->
+    <!-- PERMISOS DE ALMACENAMIENTO -->
+    <!-- ============================================ -->
+    <!-- Para Android 12 y inferior -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
+                     android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" 
+                     android:maxSdkVersion="32" />
+    <!-- Para Android 13+ (API 33) se usa READ_MEDIA_IMAGES -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    
+    <!-- ============================================ -->
+    <!-- PERMISOS DE CÁMARA -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    
+    <!-- ============================================ -->
+    <!-- PERMISOS DE UBICACIÓN -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
+    <!-- ============================================ -->
+    <!-- PERMISOS DE BIOMETRÍA (HUELLA DIGITAL) -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    
+    <!-- ============================================ -->
+    <!-- PERMISOS DE NOTIFICACIONES -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    
+    <!-- ============================================ -->
+    <!-- PERMISOS DE VIBRACIÓN -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
+    <!-- ============================================ -->
+    <!-- PERMISOS PARA WORKMANAGER (TAREAS EN SEGUNDO PLANO) -->
+    <!-- ============================================ -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    
+    <!-- ============================================ -->
+    <!-- CARACTERÍSTICAS DEL DISPOSITIVO -->
+    <!-- ============================================ -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.fingerprint" android:required="false" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <uses-feature android:name="android.hardware.location.network" android:required="false" />
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    
+    <!-- ============================================ -->
+    <!-- APPLICATION -->
+    <!-- ============================================ -->
+    <application
+        android:label="QuickNote"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
+        android:allowBackup="true"
+        android:theme="@style/LaunchTheme">
+        
+        <!-- ============================================ -->
+        <!-- ACTIVIDAD PRINCIPAL -->
+        <!-- ============================================ -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            
+            <!-- Tema normal para la actividad -->
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+            
+            <!-- Intent filter para lanzar la app -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+            <!-- Intent filter para compartir texto (opcional) -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        
+        <!-- ============================================ -->
+        <!-- PROVIDER PARA FILE SHARING (workmanager + share_plus) -->
+        <!-- ============================================ -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        
+        <!-- ============================================ -->
+        <!-- WORKMANAGER (TAREAS EN SEGUNDO PLANO) -->
+        <!-- ============================================ -->
+        <service
+            android:name="androidx.work.impl.background.SystemAlarmService"
+            android:exported="false" />
+        <service
+            android:name="androidx.work.impl.background.SystemJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        
+        <!-- ============================================ -->
+        <!-- ✅ RECEIVERS DE NOTIFICACIONES ELIMINADOS -->
+        <!-- Los receivers ScheduledNotificationReceiver y -->
+        <!-- ScheduledNotificationBootReceiver ya no son -->
+        <!-- necesarios en la versión actual del plugin -->
+        <!-- ============================================ -->
+        
+        <!-- ============================================ -->
+        <!-- META-DATA DE FLUTTER -->
+        <!-- ============================================ -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+            
+    </application>
+    
+    <!-- ============================================ -->
+    <!-- QUERIES (para compatibilidad con Android 11+) -->
+    <!-- ============================================ -->
+    <queries>
+        <!-- Para procesar texto -->
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT" />
+            <data android:mimeType="text/plain" />
+        </intent>
+        
+        <!-- Para compartir en redes sociales -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+        
+        <!-- Para abrir enlaces externos -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+        
+        <!-- Para escanear códigos QR (mobile_scanner) -->
+        <intent>
+            <action android:name="com.google.android.gms.vision.barcode.Barcode" />
+        </intent>
+        
+        <!-- Para seleccionar imágenes de la galería -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+            <data android:mimeType="image/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+            <data android:mimeType="image/*" />
+        </intent>
+    </queries>
+    
+</manifest>

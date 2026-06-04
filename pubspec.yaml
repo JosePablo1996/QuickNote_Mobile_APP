@@ -1,0 +1,126 @@
+name: quicknote
+description: A modern note-taking app with cloud backup, biometric authentication, and advanced security.
+publish_to: 'none'
+version: 2.8.0+2
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # ============================================
+  # Networking
+  # ============================================
+  dio: ^5.4.0
+  retrofit: ^4.0.1
+  logger: ^2.0.2+1
+  http: ^1.1.0
+  
+  # ============================================
+  # Almacenamiento seguro
+  # ============================================
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.2.2
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.1
+  
+  # ============================================
+  # UI y Diseño
+  # ============================================
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.9
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.1
+  flutter_staggered_animations: ^1.1.0
+  flutter_animate: ^4.1.1+1
+  
+  # ============================================
+  # Estado (Riverpod)
+  # ============================================
+  flutter_riverpod: ^2.5.0
+  riverpod_annotation: ^2.3.0
+  
+  # ============================================
+  # Navegación
+  # ============================================
+  go_router: ^13.0.0
+  
+  # ============================================
+  # Utilidades
+  # ============================================
+  intl: ^0.18.1
+  equatable: ^2.0.5
+  uuid: ^4.3.3
+  url_launcher: ^6.2.5
+  share_plus: ^9.0.0
+  
+  # ============================================
+  # Seguridad
+  # ============================================
+  local_auth: ^2.1.7
+  
+  # ============================================
+  # 2FA y QR
+  # ============================================
+  qr_flutter: ^4.1.0
+  mobile_scanner: ^5.0.0
+  otp: ^3.0.0
+  
+  # ============================================
+  # Exportación y Backups
+  # ============================================
+  pdf: ^3.10.7
+  printing: ^5.11.1
+  file_picker: ^8.0.0+1
+  archive: ^3.4.10
+  
+  # ============================================
+  # Animaciones
+  # ============================================
+  lottie: ^3.0.0
+  
+  # ============================================
+  # Selección de imágenes
+  # ============================================
+  image_picker: ^1.0.5
+  
+  # ============================================
+  # Iconos
+  # ============================================
+  cupertino_icons: ^1.0.6
+  
+  # ============================================
+  # Notificaciones locales
+  # ============================================
+  flutter_local_notifications: ^17.2.4
+  
+  # ❌ workmanager ELIMINADO - Causaba problemas de compilación
+  # permission_handler eliminado (no es necesario si no usas workmanager)
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.8
+  riverpod_generator: ^2.3.0
+  flutter_launcher_icons: ^0.14.3  # ✅ AÑADIDO para generar iconos
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/images/1766699641613.jpg
+    - assets/icons/  # ✅ AÑADIDO para que reconozca tu icono
+
+# ============================================
+# CONFIGURACIÓN DEL ICONO DE LA APP
+# ============================================
+flutter_icons:
+  image_path: "assets/icons/icon.png"
+  android: true
+  ios: true
+  adaptive_icon_background: "#FFFFFF"   # Fondo blanco para icono adaptable
+  adaptive_icon_foreground: "assets/icons/icon.png"
